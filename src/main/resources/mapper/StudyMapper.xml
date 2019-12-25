@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.dao.StudyMapper">
+  <resultMap id="BaseResultMap" type="com.test.pojo.Study">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sid" jdbcType="VARCHAR" property="sid" />
+    <result column="cid" jdbcType="INTEGER" property="cid" />
+    <result column="scount" jdbcType="INTEGER" property="scount" />
+    <result column="studying" jdbcType="INTEGER" property="studying" />
+  </resultMap>
+
+  <!--修改学习状态-->
+  <update id="updateByStata">
+    UPDATE t_study sts SET sts.studying = 0 WHERE sts.study_id = (SELECT bbb.study_id FROM
+        (SELECT * FROM t_study sd WHERE sd.sid = #{stuId} and sd.studying = 1)bbb)
+  </update>
+
+  <!-- 插入新增课程 -->
+  <insert id="add">
+    INSERT INTO t_study(sid,cid,scount,studying,restudy) VALUES(#{sid},#{cid},1,1,0)
+  </insert>
+
+ <!--根据学生ID查询出要末班的对应studyId-->
+ <!-- <select id="queryByStuId" resultMap="BaseResultMap">
+    SELECT * FROM t_study WHERE sid = #{id} ORDER BY study_id DESC LIMIT 0,1;
+  </select>
+  <update id="updateByScount">
+    UPDATE t_study sd SET scount=sd.scount + 1,restudy =sd.restudy+1 WHERE study_id=#{studyId};
+  </update>-->
+
+
+  <!--整合后的sql语句-->
+  <update id="updateByStuId">
+    UPDATE t_study sd SET scount=sd.scount + 1,restudy =sd.restudy+1 WHERE study_id=(SELECT sa.study_id FROM (SELECT * FROM t_study WHERE sid = #{id} ORDER BY study_id DESC LIMIT 0,1)sa);
+  </update>
+</mapper>

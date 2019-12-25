@@ -1,0 +1,12 @@
+com\test\service\impl\StudentServiceImpl.class
+com\test\service\StudentService.class
+com\test\service\CourseService.class
+com\test\dao\StudyMapper.class
+com\test\dao\CoerseMapper.class
+com\test\pojo\Student.class
+com\test\web\CourseController.class
+com\test\dao\StudentMapper.class
+com\test\pojo\Coerse.class
+com\test\service\impl\CourseServiceImpl.class
+com\test\pojo\Study.class
+com\test\web\StudentController.class

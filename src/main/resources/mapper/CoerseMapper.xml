@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.dao.CoerseMapper">
+  <resultMap id="BaseResultMap" type="com.test.pojo.Coerse">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="c_name" jdbcType="VARCHAR" property="cName" />
+    <result column="prev_cid" jdbcType="CHAR" property="prevCid" />
+  </resultMap>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    SELECT * FROM t_course where 1=1
+  </select>
+
+  <!--   -->
+
+</mapper>

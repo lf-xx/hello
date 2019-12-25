@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.dao.StudentMapper">
+    <resultMap id="BaseResultMap" type="com.test.pojo.Student">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="s_name" jdbcType="VARCHAR" property="studentName" />
+        <result column="cometime" jdbcType="DATE" property="cometime" />
+        <result column="sumscunt" property="scount"/>
+        <result column="restudy" property="restudy"/>
+      <!--  <association property="studys" javaType="com.test.pojo.Study">
+            <id column="study_id" property="studyId"/>
+            <result column="sumscunt" property="scount"/>
+            <result column="restudy" property="restudy"/>
+        </association>-->
+
+        <collection property="coerses" ofType="com.test.pojo.Coerse">
+            <id property="id" column="cid"/>
+            <result column="c_name" property="cName"/>
+        </collection>
+
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, name, age
+  </sql>
+
+
+    <!--查询所有得学生 课程 总次数 重修次数-->
+    <select id="selectAll" resultMap="BaseResultMap">
+       SELECT st.study_id,SUM(st.scount) sumscunt ,SUM(st.restudy) restudy,s.`id`,s.s_name,s.`cometime`,c.`id` AS cid, GROUP_CONCAT(c.`c_name` SEPARATOR  '-')AS c_name FROM t_course c,t_student s ,t_study st WHERE s.`id` = st.`sid` AND st.`cid` = c.`id` GROUP BY st.sid
+    </select>
+
+    <!--修改的查询方法-->
+    <select id="selectStuByStuId" resultMap="BaseResultMap">
+        /*参数要跟mapper.java 形式参数相同*/
+        select * from t_student where id = #{stuId}
+    </select>
+
+
+
+
+
+</mapper>
